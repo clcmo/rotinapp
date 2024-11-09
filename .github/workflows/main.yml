@@ -1,0 +1,31 @@
+name: Deploy para GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Troque para o nome da branch que você usa para desenvolvimento
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Fazer o build
+        run: npm run build  # Altere conforme seu comando de build, ex: npm run build ou yarn build
+
+      - name: Deploy para o GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Branch de destino do GitHub Pages
+          folder: build  # Pasta gerada pelo build, geralmente "build" ou "dist"
