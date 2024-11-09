@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Fazer o build
-        run: npm run build  # Altere conforme seu comando de build, ex: npm run build ou yarn build
+        run: npm run  # Altere conforme seu comando de build, ex: npm run build ou yarn build
 
       - name: Deploy para o GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
