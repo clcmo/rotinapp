@@ -25,7 +25,4 @@ jobs:
         run: npm run  # Altere conforme seu comando de build, ex: npm run build ou yarn build
 
       - name: Deploy para o GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages  # Branch de destino do GitHub Pages
-          folder: /  # Pasta gerada pelo build, geralmente "build" ou "dist"
+        uses: actions/deploy-pages@v4
