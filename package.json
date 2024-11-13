@@ -1,0 +1,22 @@
+{
+  "name": "rotinapp",
+  "version": "0.0.5",
+  "description": "Criador de app sobre rotinas",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clcmo/rotinapp.git"
+  },
+  "author": "clcmo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clcmo/rotinapp/issues"
+  },
+  "homepage": "https://github.com/clcmo/rotinapp"
+}
