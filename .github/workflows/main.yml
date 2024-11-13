@@ -1,65 +1,38 @@
-name: Deploy para GitHub Pages
+name: Deploy com Jekyll e GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Troque para o nome da branch que você usa para desenvolvimento
-
+      - main  # Branch for deployment
 
 permissions:
-  id-token: write
   contents: write
-  pages: write
 
 jobs:
-  deploy:
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+  build-deploy:
+    runs-on: ubuntu-latest
 
-        - name: Instalar Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: '18'
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-        - name: Instalar dependências
-          run: npm install
+      - name: Configurar Ruby com Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: false  # Temporarily disable cache to avoid conflicts
 
-        - name: Fazer o build
-          run: npm run  # Altere conforme seu comando de build, ex: npm run build ou yarn build
+      - name: Instalar Jekyll
+        run: gem install jekyll
 
-        - name: Setup Pages
-          uses: actions/configure-pages@v5
-      
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
-          with:
-            # Upload entire repository
-            path: '.'
+      - name: Instalar dependências do Jekyll
+        run: bundle install
 
-        - name: Configurar Ruby com Bundler
-          uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: '3.0'  # Especifique a versão do Ruby se necessário
-            bundler-cache: true  # Cache automático do Bundler para evitar re-instalação
-        
-        - name: Limpar cache do Bundler
-          run: bundle cache clean
-    
-        - name: Instalar dependências do Jekyll
-          run: sudo bundle install
-    
-        - name: Build do site com Jekyll
-          run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
-          
-        
-        - name: Deploy para GitHub Pages
-          uses: JamesIves/github-pages-deploy-action@v4
-          with:
-              branch: gh-pages
-              folder: _site  # Diretório de build do Jekyll
-    
+      - name: Build do site com Jekyll
+        run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
+
+      - name: Deploy para GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: _site  # Diretório de build do Jekyll
