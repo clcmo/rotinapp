@@ -41,28 +41,19 @@ jobs:
             # Upload entire repository
             path: '.'
 
-        - name: Instalar Ruby e Bundler
-          run: |
-              sudo apt-get update
-              sudo apt-get install -y ruby-full
-              echo 'export GEM_HOME="$HOME/.gem"' >> $GITHUB_ENV
-              echo 'export PATH="$HOME/.gem/bin:$PATH"' >> $GITHUB_ENV
-              gem install bundler --user-install
+        - name: Configurar Ruby com Bundler
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: '3.0'  # Especifique a versão do Ruby se necessário
+            bundler-cache: true  # Cache automático do Bundler para evitar re-instalação
+    
     
         - name: Instalar dependências do Jekyll
-          run: |
-              bundle config set --local path 'vendor/bundle'
-              bundle install
-          env:
-            GEM_HOME: "$HOME/.gem"
-            PATH: "$HOME/.gem/bin:$PATH"
+          run: bundle install
     
         - name: Build do site com Jekyll
-          run: |
-              bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
-          env:
-            GEM_HOME: "$HOME/.gem"
-            PATH: "$HOME/.gem/bin:$PATH"
+          run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
+          
         
         - name: Deploy para GitHub Pages
           uses: JamesIves/github-pages-deploy-action@v4
