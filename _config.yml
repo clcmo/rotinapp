@@ -1,7 +1,7 @@
 title: "RotinApp"
 description: "Descrição do meu projeto"
-url: "https://clcmo.github.io"
-baseurl: "/rotinapp"  # Nome do repositório
+url: "https://clcmo.github.io/"
+baseurl: "https://clcmo.github.io/rotinapp"  # Nome do repositório
 theme: "minima"
 assets:
   css: "/assets/css"
