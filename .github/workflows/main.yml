@@ -46,7 +46,9 @@ jobs:
           with:
             ruby-version: '3.0'  # Especifique a versão do Ruby se necessário
             bundler-cache: true  # Cache automático do Bundler para evitar re-instalação
-    
+        
+        - name: Limpar cache do Bundler
+          run: bundle cache clean
     
         - name: Instalar dependências do Jekyll
           run: bundle install
