@@ -51,7 +51,7 @@ jobs:
           run: bundle cache clean
     
         - name: Instalar dependências do Jekyll
-          run: bundle install
+          run: sudo bundle install
     
         - name: Build do site com Jekyll
           run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
