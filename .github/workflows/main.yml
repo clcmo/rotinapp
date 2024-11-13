@@ -45,13 +45,20 @@ jobs:
           run: |
               sudo apt-get update
               sudo apt-get install -y ruby-full
-              gem install bundler jekyll
-              bundle install
+              gem install bundler --user-install
+              export GEM_HOME="$HOME/.gem"
+              export PATH="$HOME/.gem/bin:$PATH"
+              bundle install --path vendor/bundle
     
         - name: Build do site com Jekyll
-          run: bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
+          run: |
+              export GEM_HOME="$HOME/.gem"
+              export PATH="$HOME/.gem/bin:$PATH"
+              bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
     
-      
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4
+        - name: Deploy para GitHub Pages
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+              branch: gh-pages
+              folder: _site  # Diretório de build do Jekyll
+    
