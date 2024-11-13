@@ -5,24 +5,41 @@ on:
     branches:
       - main  # Troque para o nome da branch que você usa para desenvolvimento
 
+
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        - name: Instalar Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18'
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+        - name: Instalar dependências
+          run: npm install
 
-      - name: Instalar dependências
-        run: npm install
+        - name: Fazer o build
+          run: npm run  # Altere conforme seu comando de build, ex: npm run build ou yarn build
 
-      - name: Fazer o build
-        run: npm run  # Altere conforme seu comando de build, ex: npm run build ou yarn build
-
-      - name: Deploy para o GitHub Pages
-        uses: actions/deploy-pages@v4
+        - name: Setup Pages
+          uses: actions/configure-pages@v5
+      
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v3
+          with:
+            # Upload entire repository
+            path: '.'
+      
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
