@@ -1,0 +1,10 @@
+title: "RotinApp"
+description: "Descrição do meu projeto"
+baseurl: "/" # Substitua <seu-repositorio> pelo nome do seu repositório
+url: "https://clcmo.github.io/rotinapp"
+theme: minima  # Ou o tema que você está usando
+
+# Ignorar node_modules e pasta de build
+exclude:
+  - "node_modules"
+  - "build"

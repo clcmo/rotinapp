@@ -40,6 +40,17 @@ jobs:
           with:
             # Upload entire repository
             path: '.'
+
+        - name: Instalar Jekyll e dependências
+          run: |
+              sudo apt-get update
+              sudo apt-get install -y ruby-full
+              gem install bundler jekyll
+              bundle install
+    
+        - name: Build do site com Jekyll
+          run: bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
+    
       
         - name: Deploy to GitHub Pages
           id: deployment
